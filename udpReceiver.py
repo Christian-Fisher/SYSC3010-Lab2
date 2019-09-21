@@ -20,7 +20,7 @@ while True:
     
     print("Acknowledging")
     ackAddress = (address, port)
-    buf = "Ack: " + buf
+    buf = "Ack: " + str(buf)
     s.sendto(buf.encode('utf-8'),address)
 
 s.shutdown(1)
