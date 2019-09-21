@@ -6,9 +6,8 @@ textport = sys.argv[1]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 port = int(textport)
-server_address = ('localhost', port)
+server_address = ("",port)
 s.bind(server_address)
-
 while True:
 
     print ("Waiting to receive on port %d : press Ctrl-C or Ctrl-Break to stop " % port)
@@ -16,6 +15,12 @@ while True:
     buf, address = s.recvfrom(port)
     if not len(buf):
         break
+    
     print ("Received %s bytes from %s %s: " % (len(buf), address, buf ))
+    
+    print("Acknowledging")
+    ackAddress = (address, port)
+    buf = "Ack: " + buf
+    s.sendto(buf.encode('utf-8'),address)
 
 s.shutdown(1)
